@@ -3,21 +3,28 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../Firebase/AuthProvider";
 
 const Register = () => {
-    const {createUser} = useContext(AuthContext);
+    const {createUser, updateUser} = useContext(AuthContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
+    const photo = form.photo.value;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(name,email, password)
+    console.log(name ,photo,email, password)
 
     createUser(email,password)
     .then(result =>{
         const user = result.user;
         console.log('create', user);
-        alert('User Created Successfully')
+        updateUser(name, photo)
+        .then(()=>{
+          alert('User Created Successfully')
+        })
+        .catch(error =>{
+          console.log(error.message)
+        })
     })
     .catch(error =>{
         console.log(error.message)
@@ -45,6 +52,18 @@ const Register = () => {
                     type="text"
                     name="name"
                     placeholder="Name"
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Photo Url</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="photo"
+                    placeholder="photo Url"
                     className="input input-bordered"
                     required
                   />

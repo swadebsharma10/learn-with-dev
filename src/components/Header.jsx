@@ -1,9 +1,21 @@
+import { useContext } from "react";
 import { IoPersonAdd } from "react-icons/io5";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../Firebase/AuthProvider";
 
 const Header = () => {
 
-  // const {user} = useContext(AuthContext);
+  const {user, logOutUser} = useContext(AuthContext);
+
+  const handleLogOut =()=>{
+    logOutUser()
+    .then(()=>{
+      alert('Logout Successfully')
+    })
+    .catch(error =>{
+      console.log(error.message)
+    })
+  }
 
     const menus = <>
         <li><NavLink
@@ -14,11 +26,25 @@ const Header = () => {
         Home
       </NavLink></li>
         <li><NavLink
-        to="/about"
+        to="/course"
         className={({ isActive }) => isActive ? "text-orange-500" : ""
         }
       >
-        About
+        Courses
+      </NavLink></li>
+        <li><NavLink
+        to="/faq"
+        className={({ isActive }) => isActive ? "text-orange-500" : ""
+        }
+      >
+        FAQ
+      </NavLink></li>
+        <li><NavLink
+        to="/blogs"
+        className={({ isActive }) => isActive ? "text-orange-500" : ""
+        }
+      >
+       Blogs
       </NavLink></li>
         <li><NavLink
         to="/login"
@@ -51,9 +77,17 @@ const Header = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <Link to='/register'><button className="btn btn-secondary btn-sm">
-          <IoPersonAdd />
-          Register</button></Link>
+        {user ? <button onClick={handleLogOut} className="btn btn-secondary btn-sm">
+        LogOut</button> : <Link to='/login'><button className="btn btn-secondary btn-sm">
+        <IoPersonAdd />
+        Login</button></Link>}
+
+       { user && <div className="avatar ml-3">
+        <div className="w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+          <img title={user.displayName} src={user.photoURL} alt="User profile" />
+        </div>
+       </div>}
+
         </div>
       </div>
         </div>
