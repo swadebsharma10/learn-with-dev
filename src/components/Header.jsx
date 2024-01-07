@@ -3,6 +3,8 @@ import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
 
+  // const {user} = useContext(AuthContext);
+
     const menus = <>
         <li><NavLink
         to="/"

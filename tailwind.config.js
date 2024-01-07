@@ -4,7 +4,13 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  themes: ["light", "dark", "cupcake"],
+  themes: {
+    themes: ["cupcake", "dark", "cmyk"],
+    extend: {
+      backgroundImage: {
+        'bg-image': "url('/src/assets/images/login.jpg')",
+      }
+  } },
   plugins: [require("daisyui")],
 }
 
